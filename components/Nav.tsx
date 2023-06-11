@@ -10,6 +10,11 @@ const Nav = () => {
   const searchBarRef = useRef(null);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
+  const handleSearchBarClick = () => {
+    if (screenWidth >= 768) return;
+    setIsSearchBarVisible(true)
+  }
+
   useEffect(() => {
     if (screenWidth >= 768 && isSearchBarVisible) setIsSearchBarVisible(false);
   }, [screenWidth]);
@@ -62,7 +67,7 @@ const Nav = () => {
         className={`${
           isSearchBarVisible && "flex-grow mr-0 py-2"
         } flex items-center bg-gray-100 p-3 rounded-full mx-5 md:rounded-3xl md:py-2 md:max-w-xl md:w-full`}
-        onClick={() => setIsSearchBarVisible(true)}
+        onClick={handleSearchBarClick}
       >
         <FaSearch className="text-gray-400" />
         <input
