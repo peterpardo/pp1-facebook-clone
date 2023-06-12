@@ -1,9 +1,19 @@
-import Nav from "@/components/Nav"
+"use client";
+
+import { useRouter } from "next/navigation";
+
+import Nav from "@/components/Nav";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  return (
-    <main>
-      <Nav/>
-    </main>
-  )
+  const router = useRouter();
+  const isLoggedIn = false;
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push("/login");
+    }
+  }, []);
+
+  return <main>{!isLoggedIn ? <p>Loading...</p> : <Nav />}</main>;
 }
