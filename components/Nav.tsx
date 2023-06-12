@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { FaSearch } from "react-icons/fa";
+import { FaAngleDown, FaSearch } from "react-icons/fa";
 import defaultUser from "@/public/images/user_default_pic.jpg";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import DropdownItem from "./DropdownItem";
@@ -78,13 +78,9 @@ const Nav = () => {
   return (
     <nav className="flex items-center px-5 py-2 shadow-[0px_-4px_8px_-1px_rgba(0,0,0,1)] md:justify-between">
       {/* logo */}
-      <div className="text-[color:var(--fb-blue)] font-bold text-3xl">Logo</div>
+      <div className="text-[color:var(--fb-blue)] font-bold text-3xl cursor-pointer">Logo</div>
 
       {/* searchbar */}
-      {/* TODO: 
-        1. When search icon is clicked, show search bar and hide the user icon - DONE
-        2. Show dropdown when typing user
-      */}
       <div
         ref={searchBarRef}
         className={`${
@@ -124,9 +120,12 @@ const Nav = () => {
         2. show dropdown with list of options when clicked
       */}
       {!isSearchBarVisible && (
-        <div className="flex items-center ml-auto md:ml-0">
+        <div className="relative flex items-center ml-auto md:ml-0 cursor-pointer">
           <div className="w-10 rounded-full overflow-hidden">
             <Image src={defaultUser} alt="user image" className="w-full" />
+            <div className="absolute -right-1 -bottom-1.5 z-20 p-1 rounded-full bg-white">
+              <FaAngleDown className="text-sm bg-gray-100 rounded-full"/>
+            </div>
           </div>
         </div>
       )}
