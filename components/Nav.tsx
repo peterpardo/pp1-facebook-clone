@@ -2,22 +2,44 @@
 
 import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
-import defaultUser from "@/public/60111.jpg";
-import { useEffect, useRef, useState } from "react";
+import defaultUser from "@/public/images/user_default_pic.jpg";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import DropdownItem from "./DropdownItem";
+import { DUMMY_DATA } from "@/data/user";
 
 const Nav = () => {
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(window?.innerWidth);
+  const [search, setSearch] = useState("");
   const searchBarRef = useRef(null);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   const handleSearchBarClick = () => {
     if (screenWidth >= 768) return;
-    setIsSearchBarVisible(true)
-  }
 
+    setIsSearchBarVisible(true);
+  };
+
+  const handleSearchInput = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
+
+  // effect for input focus
   useEffect(() => {
-    if (screenWidth >= 768 && isSearchBarVisible) setIsSearchBarVisible(false);
-  }, [screenWidth]);
+    if (searchBarRef.current) {
+      const input = (searchBarRef.current as HTMLElement)
+        .children[1] as HTMLElement;
+      input.focus();
+    }
+  }, [isSearchBarVisible, searchBarRef]);
+
+  // effect for search bar
+  useEffect(() => {
+    if (screenWidth >= 768 && isSearchBarVisible) {
+      setIsSearchBarVisible(false);
+    } else if (screenWidth < 768 && search) {
+      setIsSearchBarVisible(true);
+    }
+  }, [screenWidth, search]);
 
   // effect for window resize
   useEffect(() => {
@@ -32,7 +54,7 @@ const Nav = () => {
     };
   }, []);
 
-  // effect for search bar
+  // effect for dropdown
   useEffect(() => {
     const handleClickOutside = (event: Event) => {
       if (
@@ -42,6 +64,7 @@ const Nav = () => {
       ) {
         console.log("close drowpdown");
         setIsSearchBarVisible(false);
+        setSearch("");
       }
     };
 
@@ -66,17 +89,33 @@ const Nav = () => {
         ref={searchBarRef}
         className={`${
           isSearchBarVisible && "flex-grow mr-0 py-2"
-        } flex items-center bg-gray-100 p-3 rounded-full mx-5 md:rounded-3xl md:py-2 md:max-w-xl md:w-full`}
+        } relative flex items-center pos bg-gray-100 p-3 rounded-full mx-5 md:rounded-3xl md:py-2 md:max-w-xl md:w-full`}
         onClick={handleSearchBarClick}
       >
         <FaSearch className="text-gray-400" />
         <input
           type="text"
           placeholder="Search"
+          value={search}
           className={`${
             !isSearchBarVisible && "hidden"
           } bg-transparent outline-none ml-3 w-full md:block`}
+          onChange={handleSearchInput}
         />
+
+        {/* dropdown */}
+        {search && (
+          <ul className="absolute top-[49px] inset-x-0 drop-shadow-lg bg-white p-2 rounded-md gap-x-5">
+            {DUMMY_DATA.map((user) => (
+              <DropdownItem
+                key={user.name}
+                name={user.name}
+                userType={user.userType}
+                image={defaultUser}
+              />
+            ))}
+          </ul>
+        )}
       </div>
 
       {/* User icon */}
