@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { FaAngleDown, FaSearch } from "react-icons/fa";
+import { FaAngleDown, FaAngleRight, FaCog, FaExclamationCircle, FaMoon, FaQuestionCircle, FaSearch, FaSignOutAlt } from "react-icons/fa";
 import defaultUser from "@/public/images/user_default_pic.jpg";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import DropdownItem from "./DropdownItem";
@@ -120,12 +120,54 @@ const Nav = () => {
         2. show dropdown with list of options when clicked
       */}
       {!isSearchBarVisible && (
-        <div className="relative flex items-center ml-auto md:ml-0 cursor-pointer">
-          <div className="w-10 rounded-full overflow-hidden">
+        <div className="relative flex items-center ml-auto md:ml-0">
+          {/* User image */}
+          <div className="w-10 rounded-full overflow-hidden cursor-pointer">
             <Image src={defaultUser} alt="user image" className="w-full" />
             <div className="absolute -right-1 -bottom-1.5 z-20 p-1 rounded-full bg-white">
               <FaAngleDown className="text-sm bg-gray-100 rounded-full"/>
             </div>
+          </div>
+
+          {/* Dropdown options */}
+          <div className="absolute top-[49px] right-0 bg-white drop-shadow-lg w-96 p-2 rounded-md">
+            <ul>
+              <li className="flex items-center cursor-pointer hover:bg-gray-50 rounded-md p-2">
+                <div className="bg-gray-100 rounded-full p-2 mr-5">
+                  <FaCog className="text-2xl"/>
+                </div>
+                <h3>Settings & Privacy</h3>
+                <FaAngleRight className="ml-auto"/>
+              </li>
+              <li className="flex items-center cursor-pointer hover:bg-gray-50 rounded-md p-2">
+                <div className="bg-gray-100 rounded-full p-2 mr-5">
+                  <FaQuestionCircle className="text-2xl"/>
+                </div>
+                <h3>Help & Support</h3>
+                <FaAngleRight className="ml-auto"/>
+              </li>
+              <li className="flex items-center cursor-pointer hover:bg-gray-50 rounded-md p-2">
+                <div className="bg-gray-100 rounded-full p-2 mr-5">
+                  <FaMoon className="text-2xl"/>
+                </div>
+                <h3>Display & Accessability</h3>
+                <FaAngleRight className="ml-auto"/>
+              </li>
+              <li className="flex items-center cursor-pointer hover:bg-gray-50 rounded-md p-2">
+                <div className="bg-gray-100 rounded-full p-2 mr-5">
+                  <FaExclamationCircle className="text-2xl"/>
+                </div>
+                <h3>Give feedback</h3>
+              </li>
+              <li className="flex items-center cursor-pointer hover:bg-gray-50 rounded-md p-2">
+                <div className="bg-gray-100 rounded-full p-2 mr-5">
+                  <FaSignOutAlt className="text-2xl"/>
+                </div>
+                <h3>Log Out</h3>
+              </li>
+            </ul>
+
+            <p className="text-xs mt-2 text-gray-400">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex, sed.</p>
           </div>
         </div>
       )}
