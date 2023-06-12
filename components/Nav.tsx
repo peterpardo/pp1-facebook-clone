@@ -17,7 +17,7 @@ import DropdownItem from "./DropdownItem";
 import { DUMMY_DATA } from "@/data/user";
 
 const Nav = () => {
-  const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
+  const [isSearchBarVisible, setIsSearchBarVisible] = useState(true);
   const [isDropdownOptionsVisible, setIsDropdownOptionsVisible] =
     useState(false);
   const [isDropdownSearchVisible, setIsDropdownSearchVisible] = useState(false);
@@ -78,11 +78,11 @@ const Nav = () => {
     const handleClickOutside = (event: Event) => {
       if (
         searchBarRef.current &&
-        !(searchBarRef.current as HTMLElement).contains(event.target as Node) &&
-        isSearchBarVisible
+        !(searchBarRef.current as HTMLElement).contains(event.target as Node)
       ) {
-        console.log("close drowpdown");
-        setIsSearchBarVisible(false);
+        if (isSearchBarVisible) setIsSearchBarVisible(false);
+
+        setIsDropdownSearchVisible(false);
         setSearch("");
       }
     };
@@ -103,7 +103,6 @@ const Nav = () => {
           event.target as Node
         )
       ) {
-        console.log("close drowpdown options");
         setIsDropdownOptionsVisible(false);
       }
     };
@@ -130,7 +129,7 @@ const Nav = () => {
         } relative flex items-center pos bg-gray-100 p-3 rounded-full mx-5 md:rounded-3xl md:py-2 md:max-w-xl md:w-full`}
         onClick={handleSearchBarClick}
       >
-        <FaSearch className="text-gray-400" />
+        <FaSearch className="text-gray-400 cursor-pointer" />
         <input
           type="text"
           placeholder="Search"
