@@ -21,7 +21,7 @@ const Nav = () => {
   const [isDropdownOptionsVisible, setIsDropdownOptionsVisible] =
     useState(false);
   const [isDropdownSearchVisible, setIsDropdownSearchVisible] = useState(false);
-  const [screenWidth, setScreenWidth] = useState(window?.innerWidth);
+  const [screenWidth, setScreenWidth] = useState(0);
   const [search, setSearch] = useState("");
   const searchBarRef = useRef(null);
   const dropdownOptionsRef = useRef(null);
@@ -62,9 +62,9 @@ const Nav = () => {
 
   // effect for window resize
   useEffect(() => {
-    const handleWindowResize = () => {
-      setScreenWidth(window.innerWidth);
-    };
+    const handleWindowResize = () => setScreenWidth(window.innerWidth);
+
+    if (screenWidth === 0) setScreenWidth(window.innerWidth);
 
     window.addEventListener("resize", handleWindowResize);
 
@@ -156,10 +156,6 @@ const Nav = () => {
       </div>
 
       {/* User icon */}
-      {/* TODO: 
-        1. add the arrow down icon on the lower left of the user image 
-        2. show dropdown with list of options when clicked
-      */}
       {!isSearchBarVisible && (
         <div className="relative flex items-center ml-auto md:ml-0">
           {/* User image */}
