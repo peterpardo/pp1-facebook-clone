@@ -1,14 +1,18 @@
 "use client";
 
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import Nav from "@/components/Nav";
-import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
-  const isLoggedIn = true;
+  const { data: session } = useSession();
 
-  if (!isLoggedIn) redirect("/login");
+  if (!session) redirect("/login");
 
-  return <main>{!isLoggedIn ? <p>Loading...</p> : <Nav />}</main>;
+  return (
+    <main>
+      <Nav />
+    </main>
+  );
 }

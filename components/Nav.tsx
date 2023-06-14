@@ -15,6 +15,8 @@ import defaultUser from "@/public/images/user_default_pic.jpg";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import DropdownItem from "./DropdownItem";
 import { DUMMY_DATA } from "@/data/user";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 const Nav = () => {
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(true);
@@ -25,6 +27,7 @@ const Nav = () => {
   const [search, setSearch] = useState("");
   const searchBarRef = useRef(null);
   const dropdownOptionsRef = useRef(null);
+  const userImageRef = useRef(null);
 
   const handleSearchBarClick = () => {
     if (screenWidth >= 768) return;
@@ -101,7 +104,9 @@ const Nav = () => {
         dropdownOptionsRef.current &&
         !(dropdownOptionsRef.current as HTMLElement).contains(
           event.target as Node
-        )
+        ) &&
+        userImageRef.current &&
+        !(userImageRef.current as HTMLElement).contains(event.target as Node)
       ) {
         setIsDropdownOptionsVisible(false);
       }
@@ -117,9 +122,12 @@ const Nav = () => {
   return (
     <nav className="flex items-center px-5 py-2 shadow-[0px_-4px_8px_-1px_rgba(0,0,0,1)] md:justify-between">
       {/* logo */}
-      <div className="text-[color:var(--fb-blue)] font-bold text-3xl cursor-pointer">
+      <Link
+        href="/"
+        className="text-[color:var(--fb-blue)] font-bold text-3xl cursor-pointer"
+      >
         Logo
-      </div>
+      </Link>
 
       {/* searchbar */}
       <div
@@ -160,6 +168,7 @@ const Nav = () => {
         <div className="relative flex items-center ml-auto md:ml-0">
           {/* User image */}
           <div
+            ref={userImageRef}
             className="w-10 rounded-full overflow-hidden cursor-pointer"
             onClick={handleShowUserOptions}
           >
@@ -203,7 +212,10 @@ const Nav = () => {
                   </div>
                   <h3>Give feedback</h3>
                 </li>
-                <li className="flex items-center cursor-pointer hover:bg-gray-50 rounded-md p-2">
+                <li
+                  className="flex items-center cursor-pointer hover:bg-gray-50 rounded-md p-2"
+                  onClick={() => signOut()}
+                >
                   <div className="bg-gray-100 rounded-full p-2 mr-5">
                     <FaSignOutAlt className="text-2xl" />
                   </div>

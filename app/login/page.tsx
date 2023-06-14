@@ -1,15 +1,23 @@
 "use client";
 
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { FormEvent } from "react";
+import { redirect } from "next/navigation";
 
 const LoginPage = () => {
+  const { data: session } = useSession();
+
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     alert("login not yet working.");
   };
+
+  if (session) {
+    redirect("/");
+  }
 
   return (
     <main className="bg-gray-100 h-screen pt-10 lg:pt-40">
@@ -76,6 +84,9 @@ const LoginPage = () => {
             <button
               type="button"
               className="flex items-center bg-gray-100 rounded-md font-semibold text-center p-3 mx-auto mb-3 hover:bg-gray-50"
+              onClick={() =>
+                signIn("google", { callback: "http://localhost:3000/" }, { prompt: "login" })
+              }
             >
               <Image
                 src="/icons/google.png"
