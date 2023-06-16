@@ -15,10 +15,11 @@ import defaultUser from "@/public/images/user_default_pic.jpg";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import DropdownItem from "./DropdownItem";
 import { DUMMY_DATA } from "@/data/user";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
 const Nav = () => {
+  const { data: session } = useSession();
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(true);
   const [isDropdownOptionsVisible, setIsDropdownOptionsVisible] =
     useState(false);
@@ -149,7 +150,7 @@ const Nav = () => {
         />
 
         {/* dropdown */}
-        {isDropdownSearchVisible && (
+        {isDropdownSearchVisible && search && (
           <ul className="absolute top-[49px] inset-x-0 drop-shadow-lg bg-white p-2 rounded-md gap-x-5">
             {DUMMY_DATA.map((user) => (
               <DropdownItem
@@ -172,7 +173,13 @@ const Nav = () => {
             className="w-10 rounded-full overflow-hidden cursor-pointer"
             onClick={handleShowUserOptions}
           >
-            <Image src={defaultUser} alt="user image" className="w-full" />
+            <Image
+              src={session?.user.image as string}
+              alt="user image"
+              width={40}
+              height={40}
+              className="w-full"
+            />
             <div className="absolute -right-1 -bottom-1.5 z-20 p-1 rounded-full bg-white">
               <FaAngleDown className="text-sm bg-gray-100 rounded-full" />
             </div>
