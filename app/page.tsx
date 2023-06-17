@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import Nav from "@/components/Nav";
 import { useSession } from "next-auth/react";
+import Feed from "@/components/Feed";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -11,8 +12,9 @@ export default function Home() {
   if (!session) redirect("/login");
 
   return (
-    <main>
+    <main className="bg-gray-100 h-screen">
       <Nav />
+      <Feed />
     </main>
   );
 }

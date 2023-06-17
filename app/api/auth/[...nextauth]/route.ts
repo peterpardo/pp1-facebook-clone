@@ -22,9 +22,7 @@ const handler = NextAuth({
       try {
         // connect to db
         await connectToDb();
-
-        console.log("profile", profile);
-
+        
         // check if user already exists
         const userExists = await User.findOne({ email: profile?.email });
 

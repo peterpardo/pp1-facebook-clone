@@ -121,7 +121,7 @@ const Nav = () => {
   }, [dropdownOptionsRef]);
 
   return (
-    <nav className="flex items-center px-5 py-2 shadow-[0px_-4px_8px_-1px_rgba(0,0,0,1)] md:justify-between">
+    <nav className="flex items-center px-5 py-2 shadow-[0px_-4px_8px_-1px_rgba(0,0,0,1)] md:justify-between bg-white">
       {/* logo */}
       <Link
         href="/"
@@ -135,7 +135,7 @@ const Nav = () => {
         ref={searchBarRef}
         className={`${
           isSearchBarVisible && "flex-grow mr-0 py-2"
-        } relative flex items-center pos bg-gray-100 p-3 rounded-full mx-5 md:rounded-3xl md:py-2 md:max-w-xl md:w-full`}
+        } relative flex items-center bg-gray-100 p-3 rounded-full mx-5 md:rounded-3xl md:py-2 md:max-w-xl md:w-full`}
         onClick={handleSearchBarClick}
       >
         <FaSearch className="text-gray-400 cursor-pointer" />
@@ -151,7 +151,7 @@ const Nav = () => {
 
         {/* dropdown */}
         {isDropdownSearchVisible && search && (
-          <ul className="absolute top-[49px] inset-x-0 drop-shadow-lg bg-white p-2 rounded-md gap-x-5">
+          <ul className="absolute top-[49px] inset-x-0 drop-shadow-lg bg-white p-2 rounded-md gap-x-5 z-10">
             {DUMMY_DATA.map((user) => (
               <DropdownItem
                 key={user.name}
@@ -189,7 +189,7 @@ const Nav = () => {
           {isDropdownOptionsVisible && (
             <div
               ref={dropdownOptionsRef}
-              className="absolute top-[49px] right-0 bg-white drop-shadow-lg w-96 p-2 rounded-md"
+              className="absolute top-[49px] right-0 bg-white drop-shadow-lg w-96 p-2 rounded-md z-10"
             >
               <ul>
                 <li className="flex items-center cursor-pointer hover:bg-gray-50 rounded-md p-2">
