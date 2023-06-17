@@ -24,11 +24,11 @@ const Feed = () => {
           </div>
         </div>
 
-        <hr/>
+        <hr className="hidden md:block"/>
 
-        <div className="flex justify-around items-center gap-x-2">
+        <div className="justify-around items-center gap-x-2 hidden md:flex">
           <div className="text-sm flex items-center justify-center rounded-md hover:bg-gray-100 gap-x-2 cursor-pointer px-5 py-1 flex-1">
-            <div>
+            <div className="w-5 md:w-10">
               {/* image */}
               <Image src='/icons/video-player.png' width={30} height={30} alt='video icon'/>
             </div>
@@ -37,7 +37,7 @@ const Feed = () => {
             </div>
           </div>
           <div className="text-sm flex items-center justify-center rounded-md hover:bg-gray-100 gap-x-2 cursor-pointer px-5 py-1 flex-1">
-            <div>
+            <div className="w-5 md:w-10">
               {/* image */}
               <Image src='/icons/picture.png' width={30} height={30} alt='video icon'/>
             </div>
@@ -46,7 +46,7 @@ const Feed = () => {
             </div>
           </div>
           <div className="text-sm flex items-center justify-center rounded-md hover:bg-gray-100 gap-x-2 cursor-pointer px-5 py-1 flex-1">
-            <div>
+            <div className="w-5 md:w-10">
               {/* image */}
               <Image src='/icons/happy.png' width={30} height={30} alt='video icon'/>
             </div>
