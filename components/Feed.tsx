@@ -1,11 +1,21 @@
+'use client'
+
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useState } from "react";
+import CreatePostModal from "./CreatePostModal";
 
 const Feed = () => {
   const { data: session } = useSession();
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const handleShowModal = () => {
+    setIsOpenModal(true)
+  }
 
   return (
     <section className="flex flex-col justify-center mx-auto max-w-[680px] w-full p-2 gap-y-3">
+      {/* Create Post Section */}
       <div className="flex flex-col gap-y-3 bg-white rounded-md p-4 drop-shadow-md w-full">
         <div className="flex gap-x-3">
           {/* image */}
@@ -19,7 +29,7 @@ const Feed = () => {
             />
           </div>
           {/* text */}
-          <div className="flex items-center rounded-3xl bg-gray-100 py-1 px-4 flex-1 cursor-pointer hover:bg-gray-200">
+          <div className="flex items-center rounded-3xl bg-gray-100 py-1 px-4 flex-1 cursor-pointer hover:bg-gray-200" onClick={handleShowModal}>
             <span className="text-gray-500">{`What's on your mind, ${session?.user.name}?`}</span>
           </div>
         </div>
@@ -56,6 +66,10 @@ const Feed = () => {
           </div>
         </div>
       </div>
+
+      {/* List of Posts */}
+
+      <CreatePostModal/>
     </section>
   );
 };
