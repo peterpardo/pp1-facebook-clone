@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
 import CreatePostModal from "./CreatePostModal";
+import Post from "./Post";
 
 const Feed = () => {
   const { data: session } = useSession();
@@ -86,6 +87,7 @@ const Feed = () => {
       </div>
 
       {/* List of Posts */}
+      <Post />
 
       <CreatePostModal
         isOpen={isOpenModal}
