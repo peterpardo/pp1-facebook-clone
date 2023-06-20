@@ -2,8 +2,15 @@
 
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { FaEllipsisH, FaRegComment, FaRegShareSquare, FaRegThumbsUp, FaTimes } from "react-icons/fa";
+import { ChangeEvent, useEffect, useState } from "react";
+import {
+  FaArrowCircleRight,
+  FaEllipsisH,
+  FaRegComment,
+  FaRegShareSquare,
+  FaRegThumbsUp,
+  FaTimes,
+} from "react-icons/fa";
 
 let dummyPost =
   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae blanditiis doloribus adipisci, quibusdam dolor omnis velit commodi tempora pariatur quas dolore illum voluptates quia distinctio iste provident ut dolorem natus harum eius nam rem sapiente recusandae facilis! Aperiam, recusandae nisi!";
@@ -12,6 +19,7 @@ const Post = () => {
   const { data: session } = useSession();
   const [isShowFullPost, setIsShowFullPost] = useState(false);
   const [post, setPost] = useState("");
+  const [comment, setComment] = useState("");
 
   useEffect(() => {
     if (isShowFullPost) {
@@ -28,6 +36,10 @@ const Post = () => {
   const handleShowFullPost = () => {
     setIsShowFullPost(true);
     setPost(dummyPost);
+  };
+
+  const handleChangeComment = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setComment(e.target.value);
   };
 
   return (
@@ -94,6 +106,43 @@ const Post = () => {
       </div>
 
       {/* comments */}
+      <div>
+        {/* Add comment section */}
+        <div className="flex items-start gap-x-2">
+          {/* image */}
+          <div className="w-8 rounded-full cursor-pointer overflow-hidden">
+            <Image
+              src={session?.user.image as string}
+              alt="user image"
+              width={40}
+              height={40}
+              className="w-full"
+            />
+          </div>
+
+          {/* textbox */}
+          <div className="flex flex-col items-center justify-between px-2 py-2 rounded-2xl bg-gray-100 w-full">
+            {/* TOOD: add hidden property when textarea not in focus
+                Also add row={1} in textarea when not in focus
+             */}
+            <textarea
+              placeholder="Write a comment..."
+              className="outline-none bg-transparent w-full resize-none px-2"
+              value={comment}
+              onChange={handleChangeComment}
+            />
+
+            <div className="p-2 rounded-full cursor-pointer hover:bg-gray-200 self-end">
+              <FaArrowCircleRight
+                className={`${
+                  comment ? "text-[color:var(--fb-blue)]" : "text-gray-400"
+                } text-xl`}
+              />
+            </div>
+          </div>
+        </div>
+        {/* Other comments section */}
+      </div>
     </div>
   );
 };
